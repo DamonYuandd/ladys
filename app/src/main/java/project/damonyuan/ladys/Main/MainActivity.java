@@ -50,7 +50,6 @@ public class MainActivity extends Commom {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getSupportActionBar().setLogo(R.drawable.icon_people);
         setContentView(R.layout.activity_main);
         ConnectivityManager cm=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo info=cm.getActiveNetworkInfo();
