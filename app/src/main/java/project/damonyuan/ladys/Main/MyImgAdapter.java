@@ -1,11 +1,9 @@
 package project.damonyuan.ladys.Main;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,22 +14,16 @@ import project.damonyuan.ladys.R;
  * Created by damonyuan on 2016/6/23.
  */
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implements View.OnClickListener {
+public class MyImgAdapter extends RecyclerView.Adapter<MyImgAdapter.ViewHolder>  {
     private ArrayList<String> mDataset,linkArr;
     private MyPage mp;
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
     private int positionInt;
     //define interface
     public static interface OnRecyclerViewItemClickListener {
-        void onItemClick(View view , String data);
+        void onItemClick(View view, String data);
     }
-    @Override
-    public void onClick(View v) {
-        if (mOnItemClickListener != null) {
-            //注意这里使用getTag方法获取数据
-            mOnItemClickListener.onItemClick(v,(String)v.getTag());
-        }
-    }
+
 
     // Provide a reference to the type of views that you are using
     // (custom viewholder)
@@ -45,7 +37,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(ArrayList<String> myDataset,MyPage mp, ArrayList<String> linkArr) {
+    public MyImgAdapter(ArrayList<String> myDataset, MyPage mp, ArrayList<String> linkArr) {
         this.mp = mp;
         this.linkArr = linkArr;
         mDataset = myDataset;
@@ -53,24 +45,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> implem
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                   int viewType) {
+    public MyImgAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                      int viewType) {
         View v;
-        // create a new view
-     /*  if(this.positionInt == 5){
             v = LayoutInflater.from(parent.getContext()).inflate(
                     R.layout.imglist, parent, false);
-            Log.d("position", String.valueOf(this.positionInt));
-
-        }else {*/
-            v = LayoutInflater.from(parent.getContext()).inflate(
-                    R.layout.item, parent, false);
-     //  }
         // set the view's size, margins, paddings and layout parameters
 
         ViewHolder vh = new ViewHolder((TextView) v);
-        //将创建的View注册点击事件
-        v.setOnClickListener(this);
+
         return vh;
     }
 

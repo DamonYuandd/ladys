@@ -130,7 +130,7 @@ public class PageFragment extends Fragment implements MyPage {
 
         textView = (TextView) view.findViewById(R.id.f_tv);
         //textView = (TextView) view;
-        Log.d("dd",url);
+        //Log.d("dd",url);
         textView.setText("loading.....");
         linearlayout_id = (LinearLayout) view.findViewById(R.id.fragment_id);
 
@@ -150,32 +150,37 @@ public class PageFragment extends Fragment implements MyPage {
                         listArr.add(String.valueOf(Html.fromHtml(jsonObject2.getString("desc"))));
                         linkArr.add(jsonObject2.getString("url"));
                     }
-                    mRecyclerView.setHasFixedSize(true);
-                    // use a linear layout manager
-                    mLayoutManager = new LinearLayoutManager(container_fixed.getContext());
-                    //设置RecycleView的显示方向：（默认为垂直） 水平
-                    mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                    mRecyclerView.setLayoutManager(mLayoutManager);
-                    mRecyclerView.addItemDecoration(new RecycleViewDivider(container_fixed.getContext(), LinearLayoutManager.HORIZONTAL));
-                    mAdapter = new MyAdapter(listArr,getMypage(),linkArr);
-                    mRecyclerView.setAdapter(mAdapter);
-                    mAdapter.setOnItemClickListener(new MyAdapter.OnRecyclerViewItemClickListener(){
-                        @Override
-                        public void onItemClick(View view , String data){
-                           // Toast.makeText(container_fixed.getContext(), data, Toast.LENGTH_LONG).show();
-                            Intent intent=new Intent(getActivity(), MyWebView.class);
-                            intent.putExtra("url", data);
-                            // Bundle bundle=new Bundle();
-                          //  bundle.putString("url",data);
+                    if(mPage == 5){
+                       // Log.d("ttt", String.valueOf(mPage));
+                        mRecyclerView.setHasFixedSize(true);
+                        // use a linear layout manager
+                        mLayoutManager = new LinearLayoutManager(container_fixed.getContext());
+                        //设置RecycleView的显示方向：（默认为垂直） 水平
+                        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        mRecyclerView.addItemDecoration(new RecycleViewDivider(container_fixed.getContext(), LinearLayoutManager.HORIZONTAL));
+                        mAdapter = new MyImgAdapter(listArr, getMypage(), linkArr);
+                        mRecyclerView.setAdapter(mAdapter);
 
-                            //把附加的数据放到意图当中
-                            //intent.putExtras(bundle);
-                            startActivity(intent);
-                            //開一個新的avtivity 引用webview
-                           // startActivity(new Intent(getActivity(),MyWebView.class));
-                        }
-                    });
-
+                    }else {
+                        mRecyclerView.setHasFixedSize(true);
+                        // use a linear layout manager
+                        mLayoutManager = new LinearLayoutManager(container_fixed.getContext());
+                        //设置RecycleView的显示方向：（默认为垂直） 水平
+                        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                        mRecyclerView.setLayoutManager(mLayoutManager);
+                        mRecyclerView.addItemDecoration(new RecycleViewDivider(container_fixed.getContext(), LinearLayoutManager.HORIZONTAL));
+                        mAdapter = new MyAdapter(listArr, getMypage(), linkArr);
+                        mRecyclerView.setAdapter(mAdapter);
+                        mAdapter.setOnItemClickListener(new MyAdapter.OnRecyclerViewItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, String data) {
+                                Intent intent = new Intent(getActivity(), MyWebView.class);
+                                intent.putExtra("url", data);
+                                startActivity(intent);
+                            }
+                        });
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
