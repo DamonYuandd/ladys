@@ -29,8 +29,6 @@ public class MyWebView extends Commom {
         setContentView(R.layout.web_view);
         webView = (WebView)findViewById(R.id.web_view) ;
 
-
-
         //获取数据
        // Bundle bundle=this.getIntent().getExtras();
         Intent intent=this.getIntent();

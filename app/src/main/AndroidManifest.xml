@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".Main.MyWebView"></activity>
+        <activity android:name=".Main.WelFare"></activity>
     </application>
 
 </manifest>

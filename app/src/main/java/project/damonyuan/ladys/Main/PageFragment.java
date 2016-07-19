@@ -61,9 +61,11 @@ public class PageFragment extends Fragment implements MyPage {
     private RecyclerView mRecyclerView;
     private LinearLayoutManager mLayoutManager;
     private MyAdapter mAdapter;
+    private MyImgAdapter mAdapter1;
     private int pageMum = 1;
     private View view;
     private boolean canUp = true;
+    private String url;
 
     public static PageFragment newInstance(int page) {
         Bundle args = new Bundle();
@@ -95,7 +97,7 @@ public class PageFragment extends Fragment implements MyPage {
         canUp = false;
         int count = 30;
         RequestQueue mQueue = Volley.newRequestQueue(getContext());
-        String url = API_MAIN;
+        url = API_MAIN;
         switch (mPage) {
             case 1:
                 url = url + "search/query/listview/category/all/count/"+count+"/page/" + i;
@@ -127,10 +129,13 @@ public class PageFragment extends Fragment implements MyPage {
             default:
                 url = url + "search/query/listview/category/all/count/"+count+"/page/" + i;
         }
+        if(mPage == 6){
+            Intent intent = new Intent(getActivity(), WelFare.class);
+            intent.putExtra("url", url);
+            startActivity(intent);
+        }
 
         textView = (TextView) view.findViewById(R.id.f_tv);
-        //textView = (TextView) view;
-        //Log.d("dd",url);
         textView.setText("loading.....");
         linearlayout_id = (LinearLayout) view.findViewById(R.id.fragment_id);
 
@@ -140,7 +145,6 @@ public class PageFragment extends Fragment implements MyPage {
             @Override
             public void onResponse(JSONObject response) {
                 textView.setText("");
-
                 try {
                     JSONArray resultsArr = response.getJSONArray("results");
                     // str = new String[resultsArr.length()];
@@ -150,23 +154,17 @@ public class PageFragment extends Fragment implements MyPage {
                         listArr.add(String.valueOf(Html.fromHtml(jsonObject2.getString("desc"))));
                         linkArr.add(jsonObject2.getString("url"));
                     }
-                    if(mPage == 5){
-                       // Log.d("ttt", String.valueOf(mPage));
+                   // Log.d("lll", String.valueOf(mPage));
+                   /* if(mPage == 6){
+                        Intent intent = new Intent(getActivity(), WelFare.class);
+                        intent.putExtra("url", url);
+                        startActivity(intent);
+                    }else {*/
                         mRecyclerView.setHasFixedSize(true);
                         // use a linear layout manager
                         mLayoutManager = new LinearLayoutManager(container_fixed.getContext());
-                        //设置RecycleView的显示方向：（默认为垂直） 水平
-                        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                        mRecyclerView.setLayoutManager(mLayoutManager);
-                        mRecyclerView.addItemDecoration(new RecycleViewDivider(container_fixed.getContext(), LinearLayoutManager.HORIZONTAL));
-                        mAdapter = new MyImgAdapter(listArr, getMypage(), linkArr);
-                        mRecyclerView.setAdapter(mAdapter);
-
-                    }else {
-                        mRecyclerView.setHasFixedSize(true);
-                        // use a linear layout manager
-                        mLayoutManager = new LinearLayoutManager(container_fixed.getContext());
-                        //设置RecycleView的显示方向：（默认为垂直） 水平
+                        //设置RecycleVie
+                        //  w的显示方向：（默认为垂直） 水平
                         mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                         mRecyclerView.setLayoutManager(mLayoutManager);
                         mRecyclerView.addItemDecoration(new RecycleViewDivider(container_fixed.getContext(), LinearLayoutManager.HORIZONTAL));
@@ -180,7 +178,7 @@ public class PageFragment extends Fragment implements MyPage {
                                 startActivity(intent);
                             }
                         });
-                    }
+                   // }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
